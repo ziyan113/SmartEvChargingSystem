@@ -11,27 +11,36 @@ A full-stack web app to discover nearby EV charging stations, book time slots, m
 ```
 smart-ev-charging/
 ├── backend/
-│   ├── app.py                # Flask entry point
-│   ├── db.py                 # MySQL connection helper
+│   ├── app.py              # Flask entry point
+│   ├── db.py               # MySQL connection helper
+│   ├── migrate.py          # Database migration script
 │   ├── routes/
-│   │   ├── stations.py       # /stations, /nearby-stations, /slots/<id>
-│   │   └── bookings.py       # /book-slot, /my-bookings, /cancel-booking
-│   ├── requirements.txt
-│   └── .env.example
+│   │   ├── auth.py         # Login & Registration logic
+│   │   ├── bookings.py     # Slot booking & cancellation logic
+│   │   └── stations.py     # Station discovery & nearby search
+│   ├── venv/               # Python Virtual Environment (Ignored)
+│   ├── .env                # Local credentials (Ignored)
+│   ├── .env.example        # Template for environment variables
+│   └── requirements.txt    # Python dependencies
 ├── frontend/
-│   ├── index.html            # SPA shell
-│   ├── css/styles.css        # Dark EV theme
+│   ├── index.html          # SPA shell
+│   ├── css/
+│   │   ├── styles.css      # Dark EV theme
+│   │   └── bg.png          # UI assets
+│   ├── img/
+│   │   └── ev_hero_bg.png  # Hero section visuals
 │   └── js/
-│       ├── api.js            # Fetch helper + toast
-│       ├── app.js            # Page router + sidebar
-│       ├── dashboard.js      # GPS + nearby stations
-│       ├── stations.js       # All stations table
-│       ├── booking.js        # Slot booking flow
-│       ├── my-bookings.js    # My bookings + cancel
-│       └── calculator.js     # Energy calculator
-└── database/
-    ├── schema.sql            # CREATE TABLE statements
-    └── seed_data.sql         # Sample data
+│       ├── admin.js        # Admin dashboard logic
+│       ├── api.js          # Fetch helper + toast notifications
+│       ├── app.js          # Page router + sidebar
+│       ├── auth.js         # User authentication handling
+│       ├── booking.js      # Slot booking flow
+│       ├── calculator.js   # Energy & Duration calculator
+│       ├── dashboard.js    # GPS + nearby stations logic
+│       ├── my-bookings.js  # Booking management
+│       ├── notifications.js # UI feedback system
+│       └── stations.js     # Station table & filtering
+└── README.md
 ```
 
 ---
