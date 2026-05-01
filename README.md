@@ -57,19 +57,11 @@ smart-ev-charging/
 
 ### 2 — Set Up the Database
 
-Open **MySQL Workbench** or any MySQL client and run:
-
+Open your MySQL client and run the following commands to initialize the database:
 ```sql
-source /full/path/to/database/schema.sql
-source /full/path/to/database/seed_data.sql
-```
-
-Or via command line:
-
-```bash
-mysql -u root -p < database/schema.sql
-mysql -u root -p < database/seed_data.sql
-```
+CREATE DATABASE ev_charging_system;
+USE ev_charging_system;
+-- Run your table creation scripts here (user, station, chargingpoint, timeslot, booking)
 
 ### 3 — Configure Backend Environment
 
