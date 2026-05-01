@@ -62,7 +62,7 @@ Open your MySQL client and run the following commands to initialize the database
 CREATE DATABASE ev_charging_system;
 USE ev_charging_system;
 -- Run your table creation scripts here (user, station, chargingpoint, timeslot, booking)
-
+```
 ### 3 — Configure Backend Environment
 
 ```bash
