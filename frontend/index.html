@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart EV Charging System</title>
+    <meta name="description" content="Book EV charging slots, manage stations, and track energy requirements." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css?v=3" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+</head>
+
+<body>
+
+    <!-- ════════ LOGIN PAGE ════════ -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-split-layout">
+
+            <!-- Left Background Hero -->
+            <div class="auth-hero">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>Powering the Future of Mobility</h1>
+                    <p>Experience the next generation of seamless EV charging infrastructure.</p>
+                </div>
+            </div>
+
+            <!-- Right Authentication Actions -->
+            <div class="auth-interaction">
+                <div class="auth-card">
+                    <div class="auth-logo">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accent">
+                            <path d="M4 10h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8z" />
+                            <path d="M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" />
+                            <path d="M13 14l-4 4h3l-2 4 5-5h-3l2-3z" stroke="var(--cyan)" fill="var(--cyan)" />
+                        </svg>
+                        <span class="auth-logo-text">EV<span class="accent">Charge</span></span>
+                    </div>
+
+                    <div class="auth-tabs">
+                        <!-- CRITICAL BUG FIX: type="button" prevents form submission logic clashing -->
+                        <button type="button" class="auth-tab active" id="tabLogin">Log In</button>
+                        <button type="button" class="auth-tab" id="tabSignup">Sign Up</button>
+                    </div>
+
+                    <div id="authError" class="auth-error" style="display:none;"></div>
+
+                    <!-- LOGIN FORM -->
+                    <form id="loginForm">
+                        <h2 class="auth-title">Welcome Back</h2>
+                        <p class="auth-subtitle">Sign in to manage your EV charging sessions</p>
+
+                        <div class="form-step">
+                            <label class="form-label" for="loginEmail">Email Address</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                        </path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </span>
+                                <input type="email" class="form-input has-icon" id="loginEmail"
+                                    placeholder="your@email.com" required autocomplete="email" />
+                            </div>
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="loginPassword">Password</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                </span>
+                                <input type="password" class="form-input has-icon" id="loginPassword"
+                                    placeholder="••••••••" required autocomplete="current-password" />
+                            </div>
+                        </div>
+
+                        <div class="auth-options">
+                            <label class="remember-me"><input type="checkbox"> Remember Me</label>
+                            <a href="#" class="forgot-pwd">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <!-- SIGNUP FORM -->
+                    <form id="signupForm" style="display:none;">
+                        <h2 class="auth-title">Create Account</h2>
+                        <p class="auth-subtitle">Join the next generation of EV charging</p>
+
+                        <div class="form-step">
+                            <label class="form-label" for="signupName">Full Name</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                                <input type="text" class="form-input has-icon" id="signupName" placeholder="Ziyan"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="signupEmail">Email Address</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                        </path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </span>
+                                <input type="email" class="form-input has-icon" id="signupEmail"
+                                    placeholder="ziyan@example.com" required />
+                            </div>
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="signupPhone">Phone (Optional)</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                <input type="tel" class="form-input has-icon" id="signupPhone" value="+91 "
+                                    placeholder="+91 9876543210" />
+                            </div>
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="signupPassword">Password</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                </span>
+                                <input type="password" class="form-input has-icon" id="signupPassword"
+                                    placeholder="••••••••" required minlength="6" />
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full" id="signupBtn">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════ APP SHELL ════════ -->
+    <div class="app-shell" id="appShell" style="display:none;">
+
+        <!-- ── SIDEBAR ─────────────────────────────────────── -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" class="accent">
+                        <path d="M4 10h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8z" />
+                        <path d="M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" />
+                        <path d="M13 14l-4 4h3l-2 4 5-5h-3l2-3z" stroke="var(--cyan)" fill="var(--cyan)" />
+                    </svg>
+                    <span class="logo-text" style="margin-left: 6px;">EV<span class="accent">Charge</span></span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu">☰</button>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" data-page="dashboard" id="nav-dashboard">
+                        <span class="nav-icon">🗺️</span><span class="nav-label">Dashboard</span>
+                    </a></li>
+                <li><a href="#" class="nav-link" data-page="stations" id="nav-stations">
+                        <span class="nav-icon">🏭</span><span class="nav-label">Stations</span>
+                    </a></li>
+                <li><a href="#" class="nav-link" data-page="booking" id="nav-booking">
+                        <span class="nav-icon">📅</span><span class="nav-label">Book Slot</span>
+                    </a></li>
+                <li><a href="#" class="nav-link" data-page="my-bookings" id="nav-my-bookings">
+                        <span class="nav-icon">🗂️</span><span class="nav-label">My Bookings</span>
+                    </a></li>
+                <li><a href="#" class="nav-link" data-page="calculator" id="nav-calculator">
+                        <span class="nav-icon">🔋</span><span class="nav-label">Energy Calc</span>
+                    </a></li>
+                <!-- Admin-only -->
+                <li class="admin-only" style="display:none;"><a href="#" class="nav-link" data-page="admin"
+                        id="nav-admin">
+                        <span class="nav-icon">🛠️</span><span class="nav-label">Admin</span>
+                    </a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-pill">
+                    <span class="user-avatar" id="userAvatar">?</span>
+                    <div>
+                        <div class="user-name" id="userName">—</div>
+                        <div class="user-email" id="userRole">—</div>
+                    </div>
+                </div>
+                <button class="btn btn-ghost btn-sm logout-btn" id="logoutBtn" style="width:100%;margin-top:8px;">
+                    🚪 Sign Out
+                </button>
+            </div>
+        </nav>
+
+        <!-- ── MAIN CONTENT ────────────────────────────────── -->
+        <main class="main-content" id="mainContent">
+            <div class="toast-container" id="toastContainer"></div>
+
+            <!-- ── DASHBOARD ──────────────────────────────── -->
+            <section class="page active" id="page-dashboard">
+                <header class="page-header">
+                    <h1>Dashboard</h1>
+                    <p class="page-subtitle">Nearby EV charging stations based on your location</p>
+                </header>
+                <div class="location-bar" id="locationBar">
+                    <span class="location-icon">📍</span>
+                    <span id="locationText">Detecting your location…</span>
+                    <button class="btn btn-sm btn-ghost" id="refreshLocation">Refresh</button>
+                </div>
+                <div class="cards-grid" id="nearbyStationsGrid">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </section>
+
+            <!-- ── STATIONS ───────────────────────────────── -->
+            <section class="page" id="page-stations">
+                <header class="page-header">
+                    <h1>All Charging Stations</h1>
+                    <p class="page-subtitle">Browse all available EV charging stations</p>
+                </header>
+                <div class="table-wrapper">
+                    <table class="data-table" id="stationsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Station Name</th>
+                                <th>Location</th>
+                                <th>Total</th>
+                                <th>Available</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stationsTableBody">
+                            <tr>
+                                <td colspan="6" class="loading-row">Loading stations…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ── BOOK SLOT ───────────────────────────────── -->
+            <section class="page" id="page-booking">
+                <header class="page-header">
+                    <h1>Book a Charging Slot</h1>
+                    <p class="page-subtitle">Select station, point, date, and time</p>
+                </header>
+                <div class="booking-layout">
+                    <div class="booking-form-card glass-card">
+                        <div class="form-step">
+                            <label class="form-label" for="bookStationSelect">1. Select Station</label>
+                            <select class="form-select" id="bookStationSelect">
+                                <option value="">-- Choose a station --</option>
+                            </select>
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="bookPointSelect">2. Select Charging Point</label>
+                            <select class="form-select" id="bookPointSelect" disabled>
+                                <option value="">-- Choose a point --</option>
+                            </select>
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="bookDate">3. Select Date</label>
+                            <input type="text" class="form-input" id="bookDate" />
+                        </div>
+                        <button class="btn btn-primary btn-full" id="loadSlotsBtn" disabled>Show Available
+                            Slots</button>
+                    </div>
+                    <div class="slots-panel" id="slotsPanel">
+                        <div class="empty-state">
+                            <div class="empty-icon">🕐</div>
+                            <p>Select a station, point, and date to see available slots</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── MY BOOKINGS ────────────────────────────── -->
+            <section class="page" id="page-my-bookings">
+                <header class="page-header">
+                    <h1>My Bookings</h1>
+                    <p class="page-subtitle">View and manage your charging reservations</p>
+                </header>
+                <div class="bookings-list" id="bookingsList">
+                    <div class="loading-spinner"><span class="spinner"></span> Loading your bookings…</div>
+                </div>
+            </section>
+
+            <!-- ── ENERGY CALCULATOR ──────────────────────── -->
+            <section class="page" id="page-calculator">
+                <header class="page-header">
+                    <h1>Energy Requirement Calculator</h1>
+                    <p class="page-subtitle">Estimate energy needed for your trip</p>
+                </header>
+                <div class="calc-layout">
+                    <div class="calc-form glass-card">
+                        <div class="form-step">
+                            <label class="form-label" for="calcDistance">Destination Distance (km)</label>
+                            <input type="number" class="form-input" id="calcDistance" placeholder="e.g. 150" min="1" />
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="calcEfficiency">Vehicle Efficiency (km/kWh)</label>
+                            <input type="number" class="form-input" id="calcEfficiency" placeholder="e.g. 6" min="0.1"
+                                step="0.1" />
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="calcChargerPower">Charger Power (kW)</label>
+                            <input type="number" class="form-input" id="calcChargerPower" placeholder="e.g. 22"
+                                min="1" />
+                        </div>
+                        <button class="btn btn-primary btn-full" id="calcBtn">Calculate</button>
+                    </div>
+                    <div class="calc-result glass-card" id="calcResult" style="display:none;">
+                        <h2 class="calc-result-title">⚡ Results</h2>
+                        <div class="calc-metrics">
+                            <div class="metric">
+                                <div class="metric-value" id="resultEnergy">—</div>
+                                <div class="metric-label">Energy Required (kWh)</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" id="resultDuration">—</div>
+                                <div class="metric-label">Charging Duration</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" id="resultRange">—</div>
+                                <div class="metric-label">Range Coverage</div>
+                            </div>
+                        </div>
+                        <div class="calc-tip" id="calcTip"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── ADMIN DASHBOARD ────────────────────────── -->
+            <section class="page" id="page-admin">
+                <header class="page-header">
+                    <h1>🛠️ Admin Dashboard</h1>
+                    <p class="page-subtitle">Manage stations, points, and monitor bookings</p>
+                </header>
+
+                <div class="admin-grid">
+                    <!-- Add Station -->
+                    <div class="glass-card">
+                        <h3 class="admin-card-title">➕ Add Station</h3>
+                        <div class="form-step">
+                            <label class="form-label" for="adminStationName">Station Name</label>
+                            <input class="form-input" id="adminStationName" placeholder="e.g. Adyar EV Hub" />
+                        </div>
+                        <div class="form-step">
+                            <label class="form-label" for="adminLocation">Location</label>
+                            <input class="form-input" id="adminLocation" placeholder="e.g. Adyar, Chennai" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-step" style="flex:1">
+                                <label class="form-label" for="adminLat">Latitude</label>
+                                <input type="number" class="form-input" id="adminLat" placeholder="12.9716"
+                                    step="0.0001" />
+                            </div>
+                            <div class="form-step" style="flex:1">
+                                <label class="form-label" for="adminLng">Longitude</label>
+                                <input type="number" class="form-input" id="adminLng" placeholder="80.2209"
+                                    step="0.0001" />
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-full" id="addStationBtn">Add Station</button>
+                    </div>
+
+                    <!-- Add Charging Point -->
+                    <div class="glass-card">
+                        <h3 class="admin-card-title">🔌 Add Charging Point</h3>
+                        <div class="form-step">
+                            <label class="form-label" for="adminPointStation">Select Station</label>
+                            <select class="form-select" id="adminPointStation">
+                                <option value="">-- Choose a station --</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-full" id="addPointBtn" style="margin-top:auto">Add Charging
+                            Point</button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="glass-card">
+                        <h3 class="admin-card-title">📊 System Overview</h3>
+                        <div class="admin-stats" id="adminStats">
+                            <div class="stat-item">
+                                <div class="stat-val" id="totalStations">—</div>
+                                <div class="stat-label">Stations</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-val" id="totalBookings">—</div>
+                                <div class="stat-label">Total Bookings</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-val" id="activeBookings">—</div>
+                                <div class="stat-label">Confirmed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Bookings Table -->
+                <div style="margin-top:28px;">
+                    <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px;color:var(--text-secondary);">ALL
+                        BOOKINGS</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User</th>
+                                    <th>Station</th>
+                                    <th>Point</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminBookingsBody">
+                                <tr>
+                                    <td colspan="7" class="loading-row">Loading…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Minimal Footer -->
+            <footer
+                style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:0.75rem; color:var(--text-muted);">
+                <p>&copy; 2026 EVCharge Network. All rights reserved. <br> Seamless energy for the modern electric road.
+                </p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/api.js?v=2"></script>
+    <script src="js/auth.js?v=2"></script>
+    <script src="js/dashboard.js?v=2"></script>
+    <script src="js/stations.js?v=2"></script>
+    <script src="js/booking.js?v=2"></script>
+    <script src="js/my-bookings.js?v=2"></script>
+    <script src="js/calculator.js?v=2"></script>
+    <script src="js/admin.js?v=2"></script>
+    <script src="js/notifications.js?v=2"></script>
+    <script src="js/app.js?v=2"></script>
+</body>
+
+</html>
